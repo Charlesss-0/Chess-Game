@@ -31,3 +31,6 @@ package-lock.json
 
 # Cache and build files for development tools
 .cache/
+
+# Markdown files for taking notes
+*.md
