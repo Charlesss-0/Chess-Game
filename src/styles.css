@@ -6,3 +6,19 @@
     width: 850px;
     aspect-ratio: 1;
 }
+
+.board-border {
+    border: 2px solid #113946;
+}
+
+.beige {
+    background: #6f6161;
+}
+
+.dark {
+    background: #113946;
+}
+
+.green {
+    background-color: #5affaa;
+}
