@@ -69,7 +69,7 @@ function placePiece(x, y, n, piece, name) {
     square.appendChild(img)
 }
 
-export function DragEvents(square) {
+export function DragEvents(x, y, square) {
     return {
         setDragEvents() {
             square.addEventListener('dragover', this.dragOver)
@@ -91,6 +91,53 @@ export function DragEvents(square) {
             e.target.classList.remove('green')
 
             e.target.append(beingDragged)
+
+            beingDragged.setAttribute('data-x', x)
+            beingDragged.setAttribute('data-y', y)
+            beingDragged.classList.add('chess-block')
+
+            highlightMoves(x, y)
+
+            console.log(beingDragged)
         },
+    }
+}
+
+function pieceMoves(x, y, piece) {
+    const possibleMoves = []
+
+    const moves = [
+        [2, 1],
+        [1, 2],
+        [-1, 2],
+        [-2, 1],
+        [-2, -1],
+        [-1, -2],
+        [1, -2],
+        [2, -1],
+    ]
+
+    for (let [dx, dy] of moves) {
+        const newX = x + dx
+        const newY = y + dy
+
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            possibleMoves.push([newX, newY])
+        }
+    }
+
+    return possibleMoves
+}
+
+function highlightMoves(x, y) {
+    const possibleMoves = pieceMoves(x, y)
+
+    for (let [newX, newY] of possibleMoves) {
+        const square = document.querySelector(
+            `.chess-block[data-x="${newX}"][data-y="${newY}"]`,
+        )
+        if (square) {
+            square.classList.add('border-solid', 'border-2', 'border-green-500')
+        }
     }
 }

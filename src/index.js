@@ -13,6 +13,8 @@ function createGrid(n) {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             const square = createSquares(i, j, n)
+            square.classList.add((i + j) % 2 === 0 ? 'beige' : 'dark')
+
             board.appendChild(square)
         }
     }
@@ -22,16 +24,15 @@ function createGrid(n) {
 }
 
 // Create a grid square element
-function createSquares(i, j, n) {
+function createSquares(x, y, n) {
     const square = document.createElement('div')
 
     square.classList.add('flex', 'justify-center', 'items-center')
-    square.classList.add((i + j) % 2 === 0 ? 'beige' : 'dark')
 
     board.style.gridTemplateColumns = `repeat(${n}, 1fr)`
     board.style.gridTemplateRows = `repeat(${n}, 1fr)`
 
-    const drag = DragEvents(square)
+    const drag = DragEvents(x, y, square)
     drag.setDragEvents()
 
     return square
