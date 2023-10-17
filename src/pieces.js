@@ -55,7 +55,6 @@ function placePiece(x, y, n, piece, name) {
     const img = document.createElement('img')
     img.src = piece
     img.classList.add('w-full', 'p-2', 'cursor-grab', `${name}`)
-    img.id = `${piece}-${x}-${y}`
     img.draggable = true
 
     const square = document.querySelector(
@@ -69,7 +68,7 @@ function placePiece(x, y, n, piece, name) {
     square.appendChild(img)
 }
 
-export function DragEvents(x, y, square) {
+export function DragEvents(square) {
     return {
         setDragEvents() {
             square.addEventListener('dragover', this.dragOver)
@@ -91,53 +90,71 @@ export function DragEvents(x, y, square) {
             e.target.classList.remove('green')
 
             e.target.append(beingDragged)
-
-            beingDragged.setAttribute('data-x', x)
-            beingDragged.setAttribute('data-y', y)
-            beingDragged.classList.add('chess-block')
-
-            highlightMoves(x, y)
-
-            console.log(beingDragged)
         },
     }
 }
 
-function pieceMoves(x, y, piece) {
-    const possibleMoves = []
+function isValidMove(x, y) {
+    return x >= 0 && x < 8 && y >= 0 && y < 8
+}
 
-    const moves = [
-        [2, 1],
-        [1, 2],
-        [-1, 2],
-        [-2, 1],
+function getPawnMoves(x, y, board) {
+    const moves = []
+    const direction = board[y][x] === 'P' ? -1 : 1
+
+    if (isValidMove(x, y + direction) && board[y + direction][x] === ' ') {
+        moves.push([x, y + direction])
+    }
+
+    if (
+        isValidMove(x - 1, y + direction) &&
+        board[y + direction][x - 1] !== ' '
+    ) {
+        moves.push([x - 1, y + direction])
+    }
+
+    if (
+        isValidMove(x + 1, y + direction) &&
+        board[y + direction][x + 1] !== ' '
+    ) {
+        moves.push([x + 1, y + direction])
+    }
+
+    return moves
+}
+
+function getKnightMoves(x, y, board) {
+    const moves = []
+    const knightMoves = [
         [-2, -1],
+        [-2, 1],
         [-1, -2],
+        [-1, 2],
         [1, -2],
+        [1, 2],
         [2, -1],
+        [2, 1],
     ]
 
-    for (let [dx, dy] of moves) {
-        const newX = x + dx
-        const newY = y + dy
-
-        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-            possibleMoves.push([newX, newY])
+    for (let [dx, dy] of knightMoves) {
+        if (isValidMove(x + dx, y + dy) && board[y + dy][x + dx] === ' ') {
+            moves.push([x + dx, y + dy])
         }
     }
 
-    return possibleMoves
+    return moves
 }
 
-function highlightMoves(x, y) {
-    const possibleMoves = pieceMoves(x, y)
+const chessboard = [
+    ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+    ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+]
 
-    for (let [newX, newY] of possibleMoves) {
-        const square = document.querySelector(
-            `.chess-block[data-x="${newX}"][data-y="${newY}"]`,
-        )
-        if (square) {
-            square.classList.add('border-solid', 'border-2', 'border-green-500')
-        }
-    }
-}
+const pawnMoves = getKnightMoves(5, 3, chessboard)
+console.log('Pawn moves: ', pawnMoves)

@@ -1,6 +1,17 @@
 import { placeInitialPieces } from './pieces' // Function to place the initial chess pieces on the board
 import { DragEvents } from './pieces' // Function to set event listeners on the squares
 
+const chessboard = [
+    ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+    ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+    ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+]
+
 // Create the chess board grid
 createGrid(8)
 
@@ -32,7 +43,7 @@ function createSquares(x, y, n) {
     board.style.gridTemplateColumns = `repeat(${n}, 1fr)`
     board.style.gridTemplateRows = `repeat(${n}, 1fr)`
 
-    const drag = DragEvents(x, y, square)
+    const drag = DragEvents(square)
     drag.setDragEvents()
 
     return square
