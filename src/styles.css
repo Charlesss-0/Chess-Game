@@ -2,23 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-#board {
-    width: 850px;
-    aspect-ratio: 1;
-}
-
-.board-border {
-    border: 2px solid #113946;
-}
-
-.beige {
-    background: #6f6161;
-}
-
-.dark {
-    background: #113946;
-}
-
-.green {
-    background-color: #5affaa;
+.shadow-thin {
+    text-shadow: 0 0 2px #000;
 }
