@@ -33,4 +33,4 @@ package-lock.json
 .cache/
 
 # Markdown files for taking notes
-*.md
+notes.md
