@@ -10,6 +10,8 @@ const chessboard = [
     ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
 ]
 
+module.exports = displayBoard
+
 function displayBoard() {
     const board = document.getElementById('board')
 
@@ -194,6 +196,3 @@ function isSameColorPiece(chessboard, fromRow, fromCol, toRow, toCol) {
 
     return false
 }
-
-// const kingMoves = getKingMoves(chessboard, 4, 4)
-// console.log(kingMoves)
